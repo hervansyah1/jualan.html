@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Aesthetic Shop - Fashion & Promo Terbaik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #eee; }
+        .hero-bg { background: linear-gradient(135deg, #1a1a1a, #2d1b69, #0f0f0f); background-size: 400% 400%; animation: darkShift 15s ease infinite; }
+        @keyframes darkShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .product-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); color: #fff; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); border-radius: 20px; transition: all 0.4s ease; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .product-card:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 15px 50px rgba(255, 255, 255, 0.1); }
+        .section-title { font-family: 'Quicksand', sans-serif; color: #fff; }
+        .btn-primary { background: linear-gradient(135deg, #ff6b6b, #4ecdc4); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); }
+        .btn-primary:hover { background: linear-gradient(135deg, #4ecdc4, #ff6b6b); transform: scale(1.05); box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6); }
+        .fade-in { animation: fadeInUp 0.8s ease-in-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .cart-modal { backdrop-filter: blur(30px); background: rgba(0, 0, 0, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; }
+        .text-light { color: #e0e0e0; }
+        .text-accent { color: #ffd700; }
+        .glow { text-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+        .nav-link { color: #fff; transition: color 0.3s ease; }
+        .nav-link:hover { color: #ffd700; }
+        header.sticky { position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); background: rgba(26, 26, 26, 0.95); transition: background 0.3s ease; }
+        #scrollTopBtn { position: fixed; bottom: 40px; right: 40px; background: #ff6b6b; color: white; border-radius: 50%; width: 48px; height: 48px; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.6); transition: background 0.3s ease; z-index: 1100; }
+        #scrollTopBtn:hover { background: #4ecdc4; }
+        #searchInput { background: rgba(255, 255, 255, 0.1); border: none; border-radius: 9999px; padding: 0.5rem 1rem; color: #eee; width: 100%; max-width: 300px; transition: background 0.3s ease; }
+        #searchInput::placeholder { color: #ccc; }
+        #searchInput:focus { outline: none; background: rgba(255, 255, 255, 0.2); }
+        .filter-btn { background: rgba(255, 255, 255, 0.1); border-radius: 9999px; padding: 0.5rem 1rem; color: #eee; cursor: pointer; transition: background 0.3s ease; user-select: none; }
+        .filter-btn.active, .filter-btn:hover { background: #ff6b6b; color: white; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.6); }
+        .testimonial-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-radius: 20px; padding: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); color: #fff; transition: transform 0.3s ease; }
+        .testimonial-card:hover { transform: translateY(-10px); box-shadow: 0 15px 50px rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="text-white relative">
+    <!-- Scroll to top button -->
+    <div id="scrollTopBtn" title="Kembali ke atas">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="hero-bg relative overflow-hidden fade-in">
+        <div class="container mx-auto px-4 py-5 flex justify-between items-center max-w-7xl">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-shopping-bag text-3xl text-yellow-400 drop-shadow-lg glow"></i>
+                <h1 class="text-2xl font-bold section-title glow">Dark Aesthetic Shop</h1>
+            </div>
+            <nav class="space-x-8 text-sm md:text-base flex items-center">
+                <a href="#" class="nav-link hover:text-yellow-400 transition-colors duration-300">Beranda</a>
+                <a href="#" class="nav-link hover:text-yellow-400 transition-colors duration-300">Produk</a>
+                <a href="#" id="cart-link" class="nav-link hover:text-yellow-400 cursor-pointer flex items-center relative" onclick="openCart()"><i class="fas fa-shopping-cart mr-1"></i>Keranjang <span id="cart-count" class="bg-gradient-to-r from-orange-400 to-red-400 text-black rounded-full px-2 py-1 text-xs ml-1 font-bold shadow-lg border border-white">0</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Promo Banner -->
+    <section class="bg-gradient-to-r from-pink-600 via-purple-700 to-indigo-800 py-8 text-center max-w-7xl mx-auto my-8 rounded-xl shadow-lg mx-4">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2">PROMO SPESIAL BULAN INI!</h2>
+        <p class="text-lg text-pink-200 mb-4">Diskon hingga 30% untuk semua produk fashion pilihan. Jangan lewatkan!</p>
+        <button class="btn-primary px-8 py-3 rounded-full font-semibold shadow-lg hover:scale-105 transition-transform duration-300" onclick="scrollToProducts()">Belanja Sekarang</button>
+    </section>
+
+    <!-- Search & Filter -->
+    <section class="max-w-7xl mx-auto px-4 mb-12">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-0">
+            <input type="text" id="searchInput" placeholder="Cari produk..." oninput="searchProducts()" aria-label="Cari produk">
+            <div class="flex gap-3 flex-wrap justify-center md:justify-start">
+                <button class="filter-btn active" data-category="all" onclick="filterCategory(event)">Semua</button>
+                <button class="filter-btn" data-category="sepatu" onclick="filterCategory(event)">Sepatu</button>
+                <button class="filter-btn" data-category="kaos" onclick="filterCategory(event)">Kaos</button>
+                <button class="filter-btn" data-category="tas" onclick="filterCategory(event)">Tas</button>
+                <button class="filter-btn" data-category="celana" onclick="filterCategory(event)">Celana</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20" id="products">
+        <!-- Product 1 -->
+        <div class="product-card p-8 fade-in" data-name="Sneakers Urban Pro" data-category="sepatu">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/443b9cf4-4232-4e66-9e2c-9c5329fd402d.png" alt="Sepatu sneakers olahraga hits dengan warna kombinasi hitam, putih, dan aksen merah cerah, ditampilkan dalam pose dinamis di atas background urban modern dengan cahaya neon dan tekstur logam polos untuk kontras stylish" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Sneakers Urban Pro</h4>
+            <p class="text-light mb-6 font-light">Sepatu nyaman dengan desain futuristic untuk mode gelap sehari-hari.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 250.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Sneakers Urban Pro', 250000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card p-8 fade-in" data-name="Kaos Polo Premium" data-category="kaos" style="animation-delay: 0.2s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8796f149-541f-43dc-8fe5-5daaf538eb81.png" alt="Kaos polo formal dengan bahan katun berkualitas tinggi berwarna biru navy, ditampilkan dalam gaya santai dengan lengan bergulung, di depan background garis-garis abstrak neon untuk sentuhan futuristic dan elegan" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Kaos Polo Premium</h4>
+            <p class="text-light mb-6 font-light">Kaos Polo tampilan elegant untuk occasion formal dalam mode gelap.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 150.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Kaos Polo Premium', 150000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card p-8 fade-in" data-name="Tas Ransel Multifungsi" data-category="tas" style="animation-delay: 0.4s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b09ea555-0b4f-49b4-ae31-fa9f0b03a028.png" alt="Tas ransel unisex dengan desain modular multifungsi berwarna hijau army, memiliki kompartemen besar dan kecil dengan zipper logam, ditampilkan dalam konteks petualangan gunung dengan latar belakang puncak salju dan hutan hijau segar" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Tas Ransel Multifungsi</h4>
+            <p class="text-light mb-6 font-light">Tas ransel multifunctional untuk lifestyle aktif di atmosfer gelap.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 200.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Tas Ransel Multifungsi', 200000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card p-8 fade-in" data-name="Sepatu Running Kaiten" data-category="sepatu" style="animation-delay: 0.6s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f2e7f648-ba41-490e-b230-2970707bb35e.png" alt="Sepatu running dengan teknologi anti-slip berwarna ungu elektrik, dirancang untuk latihan intens, ditampilkan dalam motion blur saat berjalan cepat di trek atletik dengan lampu strobe dan efek dinamis untuk tema energi tinggi" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Sepatu Running Kaiten</h4>
+            <p class="text-light mb-6 font-light">Sepatu running dengan bantalan empuk untuk performa maksimal.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 300.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Sepatu Running Kaiten', 300000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card p-8 fade-in" data-name="Kaos V Neck Casual" data-category="kaos" style="animation-delay: 0.8s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4c28db5a-44cc-4fa8-9084-9dcea39601f3.png" alt="Kaos v neck casual dengan pola abstrak hitam dan putih, membuat kesan minimalis, ditampilkan dalam gaya relaks di kafe outdoor dengan latar belakang langit biru dan tanaman hijau untuk nuansa santai dan modern" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Kaos V Neck Casual</h4>
+            <p class="text-light mb-6 font-light">Kaos casual dengan potongan leher V yang stylish untuk sehari-hari.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 100.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Kaos V Neck Casual', 100000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card p-8 fade-in" data-name="Tas Selempang Urban" data-category="tas" style="animation-delay: 1.0s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3576de57-af9c-4d3b-ad07-ac7b2f076480.png" alt="Tas selempang urban dengan bahan kulit sintetis hitam, desain elegan dengan detail emas, ditampilkan dalam konteks kota malam hari dengan necahaya gedung tinggi dan cahaya lampu jalan untuk atmosfer fashionable metropolis" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Tas Selempang Urban</h4>
+            <p class="text-light mb-6 font-light">Tas selempang untuk style urban yang praktis dan modis.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 180.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Tas Selempang Urban', 180000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card p-8 fade-in" data-name="Sepatu Boots Adventure" data-category="sepatu" style="animation-delay: 1.2s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9ae3e84a-15d1-4a13-98d1-32b333a13d50.png" alt="Sepatu boots adventure dengan bahan waterproof coklat tua, sol tebal untuk medan kasar, ditampilkan dalam setting petualangan hutan dengan daun jatuh dan cahaya matahari yang menyusup untuk nuansa eksploratif dan kuat" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Sepatu Boots Adventure</h4>
+            <p class="text-light mb-6 font-light">Sepatu boots tahan air untuk petualangan luar ruangan.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 350.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Sepatu Boots Adventure', 350000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card p-8 fade-in" data-name="Celana Chinos Slim" data-category="celana" style="animation-delay: 1.4s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/59b20ecf-d410-4266-8b98-ac86c627d86d.png" alt="Celana chinos slim fit dengan bahan katun stretch biru gelap, potongan modern, ditampilkan dalam pose fashion di studio dengan cahaya dramatik dan background polos putih untuk tema kontemporer dan elegan" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Celana Chinos Slim</h4>
+            <p class="text-light mb-6 font-light">Celana chinos slim dengan bahan stretch untuk kenyamanan maksimal.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 220.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Celana Chinos Slim', 220000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 9 -->
+        <div class="product-card p-8 fade-in" data-name="Kaos Oversized Graphic" data-category="kaos" style="animation-delay: 1.6s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/40777f34-e9af-45ac-91ef-fa64996e8bb1.png" alt="Kaos oversized dengan graphic seni abstrak neon pada latar belakang hitam, ditampilkan dalam gaya streetwear di jalanan kota dengan graffiti dinding dan lampu neon untuk tema urban artsy" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Kaos Oversized Graphic</h4>
+            <p class="text-light mb-6 font-light">Kaos oversized dengan desain graphic yang unik untuk style streetwear.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 130.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Kaos Oversized Graphic', 130000)">Tambah</button>
+            </div>
+        </div>
+
+        <!-- Product 10 -->
+        <div class="product-card p-8 fade-in" data-name="Tas Tote Canvas" data-category="tas" style="animation-delay: 1.8s;">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/49905c96-c94c-40a1-9365-4e0882dcf52e.png" alt="Tas tote canvas dengan desain minimalis putih dan hitam, kantong besar untuk shopping, ditampilkan di pantai dengan palem dan pasir putih untuk nuansa santai dan beachy" class="w-full h-72 object-cover rounded-xl mb-6 shadow-lg border border-gray-700">
+            <h4 class="text-2xl font-bold section-title mb-3 text-white">Tas Tote Canvas</h4>
+            <p class="text-light mb-6 font-light">Tas tote canvas minimalis untuk keperluan sehari-hari.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-3xl font-bold text-accent section-title glow">Rp 120.000</span>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold" onclick="addToCart('Tas Tote Canvas', 120000)">Tambah</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="max-w-7xl mx-auto px-4 mb-20">
+        <h3 class="text-4xl font-extrabold text-center mb-12 section-title glow">Apa Kata Pelanggan Kami</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-light">
+            <div class="testimonial-card">
+                <p class="mb-6 italic">"Sneakers Urban Pro sangat nyaman dan stylish! Saya suka desainnya yang modern dan cocok untuk aktivitas sehari-hari."</p>
+                <h5 class="font-bold">Rina S.</h5>
+                <p class="text-sm text-yellow-400">⭐️⭐️⭐️⭐️⭐️</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="mb-6 italic">"Kaos Polo Premium memberikan kesan profesional dan nyaman dipakai. Sangat cocok untuk kerja dan acara formal."</p>
+                <h5 class="font-bold">Dedi W.</h5>
+                <p class="text-sm text-yellow-400">⭐️⭐️⭐️⭐️⭐️</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="mb-6 italic">"Tas Ransel Multifungsi sangat praktis dan kuat. Saya pakai untuk hiking dan kerja, sangat recommended!"</p>
+                <h5 class="font-bold">Maya L.</h5>
+                <p class="text-sm text-yellow-400">⭐️⭐️⭐️⭐️⭐️</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-50">
+        <div class="cart-modal p-8 rounded-2xl max-w-lg w-full mx-4 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+            <h4 id="cartTitle" class="text-3xl font-bold mb-6 section-title text-white glow">Keranjang Dark Mode</h4>
+            <div id="cart-items" class="mb-6 space-y-4 max-h-64 overflow-y-auto"><!-- Items will be added here --></div>
+            <div class="flex justify-between items-center pt-4 border-t border-gray-600">
+                <button onclick="closeCart()" class="bg-gray-600 text-white px-6 py-3 rounded-full hover:bg-gray-500 transition-all duration-300 font-semibold">Tutup</button>
+                <button class="btn-primary text-black px-6 py-3 rounded-full font-semibold">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="hero-bg text-white py-10 relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center fade-in">
+            <p class="text-lg mb-4 text-light">© 2023 Dark Aesthetic Shop. Dibuat dengan cinta dan kreativitas.</p>
+            <div class="flex justify-center space-x-6">
+                <i class="fab fa-facebook-f text-2xl text-light hover:text-yellow-400 hover:scale-110 transition-all duration-300 cursor-pointer"></i>
+                <i class="fab fa-instagram text-2xl text-light hover:text-yellow-400 hover:scale-110 transition-all duration-300 cursor-pointer"></i>
+                <i class="fab fa-twitter text-2xl text-light hover:text-yellow-400 hover:scale-110 transition-all duration-300 cursor-pointer"></i>
+                <i class="fab fa-pinterest text-2xl text-light hover:text-yellow-400 hover:scale-110 transition-all duration-300 cursor-pointer"></i>
+            </div>
+        </div>
+        <div class="absolute top-0 left-0 w-full h-10 bg-gradient-to-b from-gray-900 to-transparent opacity-50"></div>
+    </footer>
+
+    <script>
+        let cart = [];
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartView();
+            showNotification(`${name} ditambahkan ke keranjang!`);
+        }
+        function openCart() {
+            document.getElementById('cart-modal').classList.remove('hidden');
+            updateCartView();
+        }
+        function closeCart() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+        function updateCartView() {
+            const itemsContainer = document.getElementById('cart-items');
+            itemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<p class="text-light italic">Keranjang kosong... tambahkan beberapa item!</p>';
+            }
+            cart.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex justify-between items-center py-3 border-b border-gray-600 last:border-b-0';
+                itemEl.innerHTML = `<span class="font-medium text-white">${item.name}</span><button class="text-red-400 hover:text-red-600" onclick="removeFromCart(${index})">&times;</button><span class="text-accent font-bold">${item.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }).replace('Rp', 'Rp ')}</span>`;
+                itemsContainer.appendChild(itemEl);
+            });
+        }
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartView();
+        }
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full shadow-lg z-50 fade-in-up border border-white';
+            notification.innerText = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                if (notification.parentNode) document.body.removeChild(notification);
+            }, 3000);
+        }
+        function filterCategory(event) {
+            const category = event.target.dataset.category;
+            const products = document.querySelectorAll('.product-card');
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                const name = product.dataset.name.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+        window.onscroll = function() {
+            const header = document.getElementById('header');
+            if (window.pageYOffset > header.offsetHeight) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
+            }
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.style.display = 'flex';
+            } else {
+                scrollTopBtn.style.display = 'none';
+            }
+        };
+        document.getElementById('scrollTopBtn').onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        window.onload = () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        };
+    </script>
+</body>
+</html>
+</content>
+</create_file>
